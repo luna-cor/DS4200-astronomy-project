@@ -1,4 +1,4 @@
 # DS4200-astronomy-project
 
-Luna Correia, Zoran Shamsi, Stephanie Bernales
+Luna Correia, Zoran Shamsi, Stephanie Jacinto
 
