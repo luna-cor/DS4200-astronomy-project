@@ -5,48 +5,256 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DS4200 project webpage</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 20px auto;
+            max-width: 95%;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 0.9em;
+        }
+
+        th {
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px 14px;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 8px 14px;
+            border-bottom: 1px solid #ddd;
+            vertical-align: top;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f4f4f4;
+        }
+
+        tr:hover {
+            background-color: #eaf0fb;
+        }
+
+        .col-name {
+            font-family: monospace;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .group-header td {
+            background-color: #dce8f5;
+            font-weight: bold;
+            font-size: 0.85em;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            padding: 6px 14px;
+        }
+
+        .preview-table td {
+            white-space: nowrap;
+            font-size: 0.82em;
+        }
+
+        .preview-table th {
+            font-size: 0.82em;
+        }
+
+        caption {
+            font-size: 0.9em;
+            color: #555;
+            margin-bottom: 8px;
+            text-align: left;
+            padding-left: 4px;
+        }
+    </style>
 </head>
 <body>
-    
-    
+
     <h1 style="text-align:center; padding:20px">How Discovery Methods of Exoplanets Relate to Our Understanding of Their Features</h1>
-    
+
     <h2>Introduction</h2>
 
-    <!-- TODO: this is mostly just copied from our proposal; may want to change it -->
+    <style>
+        .body_text {
+            font-size: 18px;
+            margin-left: 15px;
+            margin-right: 15px;
+        }
+    </style>
+
     <p class="body_text">
         For over three decades, exoplanets (planets orbiting stars outside of our solar 
         system) have been discovered via a multitude of different detection techniques 
         ranging from radial velocity to microlensing. Each of these detection methods is 
         unique, providing inherent observational bias towards the type of planet they are 
         able to detect. As a result of such bias, our knowledge of existing exoplanets may 
-        be limited and fail to represent the true diversity throughout the known universe. 
+        be limited and fail to represent the true diversity throughout the known universe.
     </p>
+
     <p class="body_text">
         Our project aims to analyze each detection method's unique biases and how they 
         shape the characteristics of the exoplanets we observe. Through close examination 
-        of the relationship between discovery methods and planetary characteristics, such 
-        as mass, radius, spectral type, and isolation flux, we hope to further understand 
-        how our overall knowledge of exoplanets is influenced by technological constraints. 
+        of the relationship between discovery methods and planetary characteristics we hope to further understand 
+        how our overall knowledge of exoplanets is influenced by technological constraints.
     </p>
 
     <h2>Data Source</h2>
 
-    <!--TODO: this is just copied over from the proposal, and could do with some edits-->
     <p class="body_text">
-        We sourced our data from the Exoplanet Archive, an online resource run by NASA’s 
-        Exoplanet Science Institute. Amongst the data they provide is a table collecting 
-        information on all the planetary systems the archive has ingested. That table has 
-        39,315 rows and 93 columns, but many of those will be filtered out as our analysis 
-        progresses. Even putting aside any rows with missing values, the same exoplanet can 
-        occur near-identically on multiple rows if it has multiple sources. Additionally, 
-        some of the columns seemed to only appear on the csv file, not the online portal’s 
-        view, which could imply that they’re mostly empty. 
-
+        This project uses data from the NASA Exoplanet Archive, which catalogs all confirmed
+        exoplanets along with their measured physical and orbital properties and the methods
+        and facilities used to discover them. Before analysis, we removed any planets flagged
+        as controversial and dropped duplicate entries for the same planet discovered by the
+        same method in the same year. The columns used in this project are described below.
     </p>
-    
+
+    <h3>Column Definitions</h3>
+
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Column</th>
+                    <th>Description</th>
+                    <th>Units</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="group-header"><td colspan="3">Identification</td></tr>
+                <tr>
+                    <td class="col-name">pl_name</td>
+                    <td>Planet name</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td class="col-name">hostname</td>
+                    <td>Host star name</td>
+                    <td>—</td>
+                </tr>
+
+                <tr class="group-header"><td colspan="3">Discovery</td></tr>
+                <tr>
+                    <td class="col-name">discoverymethod</td>
+                    <td>Method used to discover the planet (e.g. Transit, Radial Velocity)</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td class="col-name">disc_facility</td>
+                    <td>Facility or telescope that made the discovery</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td class="col-name">disc_year</td>
+                    <td>Year the planet was discovered</td>
+                    <td>Year</td>
+                </tr>
+
+                <tr class="group-header"><td colspan="3">Planetary Radius</td></tr>
+                <tr>
+                    <td class="col-name">pl_rade</td>
+                    <td>Planet radius</td>
+                    <td>Earth radii</td>
+                </tr>
+                <tr>
+                    <td class="col-name">pl_radeerr1 / pl_radeerr2</td>
+                    <td>Upper and lower error bounds on planet radius</td>
+                    <td>Earth radii</td>
+                </tr>
+
+                <tr class="group-header"><td colspan="3">Planetary Mass</td></tr>
+                <tr>
+                    <td class="col-name">pl_bmasse</td>
+                    <td>Planet mass or mass×sin(i) — the latter gives a minimum mass estimate based on orbital inclination</td>
+                    <td>Earth masses</td>
+                </tr>
+                <tr>
+                    <td class="col-name">pl_bmasseerr1 / pl_bmasseerr2</td>
+                    <td>Upper and lower error bounds on planet mass</td>
+                    <td>Earth masses</td>
+                </tr>
+
+                <tr class="group-header"><td colspan="3">Orbital Period</td></tr>
+                <tr>
+                    <td class="col-name">pl_orbper</td>
+                    <td>Time taken for the planet to complete one orbit around its host star</td>
+                    <td>Days</td>
+                </tr>
+                <tr>
+                    <td class="col-name">pl_orbpererr1 / pl_orbpererr2</td>
+                    <td>Upper and lower error bounds on orbital period</td>
+                    <td>Days</td>
+                </tr>
+
+                <tr class="group-header"><td colspan="3">Orbital Semi-Major Axis</td></tr>
+                <tr>
+                    <td class="col-name">pl_orbsmax</td>
+                    <td>The longest radius of the planet's elliptical orbit — a measure of how far the planet is from its star on average</td>
+                    <td>AU</td>
+                </tr>
+                <tr>
+                    <td class="col-name">pl_orbsmaxerr1 / pl_orbsmaxerr2</td>
+                    <td>Upper and lower error bounds on semi-major axis</td>
+                    <td>AU</td>
+                </tr>
+
+                <tr class="group-header"><td colspan="3">Orbital Eccentricity</td></tr>
+                <tr>
+                    <td class="col-name">pl_orbeccen</td>
+                    <td>How elliptical the orbit is — 0 is a perfect circle, values closer to 1 are more elongated</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td class="col-name">pl_orbeccenerr1 / pl_orbeccenerr2</td>
+                    <td>Upper and lower error bounds on eccentricity</td>
+                    <td>—</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h3>Dataset Preview <span style="font-weight:normal; font-size:0.85em; color:#666">(first 10 rows after cleaning)</span></h3>
+
+    <div class="table-wrapper">
+        <table class="preview-table">
+            <thead>
+                <tr>
+                    <th>pl_name</th>
+                    <th>hostname</th>
+                    <th>discoverymethod</th>
+                    <th>disc_facility</th>
+                    <th>disc_year</th>
+                    <th>pl_rade</th>
+                    <th>pl_bmasse</th>
+                    <th>pl_orbper</th>
+                    <th>pl_orbsmax</th>
+                    <th>pl_orbeccen</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>11 Com b</td><td>11 Com</td><td>Radial Velocity</td><td>Xinglong Station</td><td>2007</td><td>—</td><td>4914.898</td><td>323.21</td><td>1.178</td><td>0.238</td></tr>
+                <tr><td>11 UMi b</td><td>11 UMi</td><td>Radial Velocity</td><td>Thueringer Landessternwarte Tautenburg</td><td>2009</td><td>—</td><td>4684.814</td><td>516.22</td><td>1.53</td><td>0.08</td></tr>
+                <tr><td>14 And b</td><td>14 And</td><td>Radial Velocity</td><td>Okayama Astrophysical Observatory</td><td>2008</td><td>—</td><td>1131.151</td><td>186.76</td><td>0.775</td><td>0.0</td></tr>
+                <tr><td>14 Her b</td><td>14 Her</td><td>Radial Velocity</td><td>W. M. Keck Observatory</td><td>2002</td><td>—</td><td>2559.472</td><td>1765.039</td><td>2.774</td><td>0.373</td></tr>
+                <tr><td>16 Cyg B b</td><td>16 Cyg B</td><td>Radial Velocity</td><td>Multiple Observatories</td><td>1996</td><td>—</td><td>565.737</td><td>798.5</td><td>1.66</td><td>0.68</td></tr>
+                <tr><td>17 Sco b</td><td>17 Sco</td><td>Radial Velocity</td><td>Lick Observatory</td><td>2020</td><td>—</td><td>1373.019</td><td>578.38</td><td>1.45</td><td>0.06</td></tr>
+                <tr><td>18 Del b</td><td>18 Del</td><td>Radial Velocity</td><td>Okayama Astrophysical Observatory</td><td>2008</td><td>—</td><td>2926.246</td><td>982.85</td><td>2.476</td><td>0.024</td></tr>
+                <tr><td>1RXS J160929.1-210524 b</td><td>1RXS J160929.1-210524</td><td>Imaging</td><td>Gemini Observatory</td><td>2008</td><td>18.647</td><td>2543.0</td><td>—</td><td>330.0</td><td>—</td></tr>
+                <tr><td>24 Boo b</td><td>24 Boo</td><td>Radial Velocity</td><td>Okayama Astrophysical Observatory</td><td>2018</td><td>—</td><td>280.642</td><td>30.33</td><td>0.194</td><td>0.032</td></tr>
+                <tr><td>24 Sex b</td><td>24 Sex</td><td>Radial Velocity</td><td>Lick Observatory</td><td>2010</td><td>—</td><td>632.46</td><td>452.8</td><td>1.333</td><td>0.09</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p style="font-size:0.85em; color:#666; max-width:95%; margin: 0 auto 30px auto;">
+        Note: error bound columns (e.g. pl_radeerr1, pl_bmasseerr1) are omitted from this preview for readability but are included in the full dataset used for analysis.
+    </p>
+
     <a class="next" href="facilities_and_methods.html">Next Page</a>
-    
-    
+
 </body>
 </html>
