@@ -16,7 +16,29 @@
 
     <h2>Planetary features by discovery method</h2>
 
-    <p class="body_text">TODO: FILL IN THIS STUFF</p>
+    <p class="body_text">
+        Beyond counts, it is important to ask whether different discovery methods are biased
+        toward finding planets of certain masses. If each method preferentially detects planets
+        in a particular size range, then the dataset as a whole does not represent a uniform
+        sample of the exoplanet population and any comparisons between methods need to
+        account for that.
+    </p>
+
+    <div class="center">
+        <iframe src="plot_mass_distribution_by_method.html" width="90%" height="500px" frameborder="0"></iframe>
+    </div>
+
+    <p class="body_text">
+        The results show clear method-dependent mass biases. Imaging and astrometry tend to
+        find the most massive planets, with median masses in the thousands of Earth masses,
+        likely because these methods rely on detecting light or positional shifts that are
+        easier to observe around large, widely-separated bodies. Transit and radial velocity
+        cover a broader mass range and include many lower-mass planets, though radial velocity
+        skews heavier than transit on average. Microlensing sits in the middle, while pulsar
+        timing finds relatively low-mass planets across a very narrow range. These biases mean
+        that each method is not sampling the same population of planets, which is a
+        key consideration when interpreting the orbital and physical features explored throughout thissection.
+    </p>
 
     <h2>Orbital features by discovery method</h2>
 
