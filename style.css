@@ -7,6 +7,12 @@ body {
     background-color:rgb(246, 241, 251);
 }
 
+.body_text {
+            font-size:18px;
+            margin-left:15px;
+            margin-right:15px;
+        }
+
 /*to center plots*/
 .center {
     margin: 0 auto;
